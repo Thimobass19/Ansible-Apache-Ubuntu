@@ -1,0 +1,23 @@
+# WRITE A PLAY TO DEPLOYAPACHE
+- name: configure apache on ubuntu ec2 instances
+  hosts: ubuntuclients
+  tasks:
+    - name: Update all packages to their latest version
+      apt:
+        name: "*"
+        state: latest
+    - name: Install apache httpd
+      apt: name=apache2 update_cache=yes state=latest
+    - name: Copy index file from controllerto the clients
+      ansible.builtin.copy:
+        src: /home/ssm-user/index.html
+        dest: /var/www.html/
+
+- name: Installing git on ubuntu ec2 instances
+  hosts: ubuntuclients
+  tasks:
+    - name: Install git
+      apt:
+        name: git
+        state: latest
+        update_cache: yes
